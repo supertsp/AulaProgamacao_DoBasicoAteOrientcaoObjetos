@@ -1,8 +1,9 @@
 package lista03exercicioa;
-import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.*;
+
+import static lista03exercicioa.LerExibir.*;
+
 public class Lista03ExercicioA {
-    static final String NOME_APP = "CONVERTER 5000";
+    
     
     public static void main(String[] args) {        
         int opcao = lerInt(
@@ -36,30 +37,5 @@ public class Lista03ExercicioA {
         );
     }//main
     
-    public static String ler(Object mensagem){
-        return showInputDialog(
-                null, //janela pai
-                mensagem, //mensagem
-                NOME_APP, //título
-                JOptionPane.PLAIN_MESSAGE
-        );
-    }//ler
-    
-    public static double lerDouble(Object mensagem){
-        return Double.parseDouble(ler(mensagem));        
-    }//lerDouble
-    
-    public static int lerInt(Object mensagem){
-        return Integer.parseInt(ler(mensagem));        
-    }//lerInt
-    
-    public static void exibir(Object mensagem){
-        showMessageDialog(
-                null, //janela pai
-                mensagem, //mensagem
-                NOME_APP, //título
-                JOptionPane.PLAIN_MESSAGE
-        );
-    }//exibir
     
 }//class
