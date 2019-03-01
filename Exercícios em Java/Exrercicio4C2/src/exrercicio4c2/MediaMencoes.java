@@ -72,6 +72,12 @@ public class MediaMencoes extends javax.swing.JFrame {
 
         jLabel1.setText("Mencão  1° Bimestre:");
 
+        tfMencao1Bim.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                onKeyReleased(evt);
+            }
+        });
+
         jLabel2.setText("Mencão  2° Bimestre:");
 
         jLabel3.setText("Mencão  3° Bimestre:");
@@ -148,8 +154,27 @@ public class MediaMencoes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("Show foda");
+        System.out.println(tfMencao1Bim.getText());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void onKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onKeyReleased
+        String textoFinal = tfMencao1Bim.getText();
+        textoFinal = textoFinal.trim().toUpperCase();        
+        
+        if (textoFinal.length() > 1) {
+            textoFinal = validaCaracteres(textoFinal);
+        }
+        
+        if (textoFinal.length() > 2) {
+            textoFinal = textoFinal.substring(0, 2);
+        }
+        
+        if (textoFinal.equals("M")) {
+            textoFinal = "MB";
+        }
+        
+        tfMencao1Bim.setText(textoFinal);
+    }//GEN-LAST:event_onKeyReleased
 
     /**
      * @param args the command line arguments
@@ -198,4 +223,22 @@ public class MediaMencoes extends javax.swing.JFrame {
     private javax.swing.JTextField tfMencao3Bim;
     private javax.swing.JTextField tfMencao4Bim;
     // End of variables declaration//GEN-END:variables
+
+    private String validaCaracteres(String textoFinal) {
+        switch (textoFinal) {
+            case "M":
+                return "MB";
+            
+            case "B":
+                return "B";
+            
+            case "R":
+                return "R";
+               
+            default:
+                return "I";
+        }
+    }
+
+   
 }
