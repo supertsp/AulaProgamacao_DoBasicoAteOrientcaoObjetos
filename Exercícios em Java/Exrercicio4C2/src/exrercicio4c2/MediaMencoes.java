@@ -5,6 +5,8 @@
  */
 package exrercicio4c2;
 
+import java.awt.event.KeyEvent;
+import javax.swing.JTextField;
 import static lerexibir.Janela.ler;
 
 /**
@@ -19,35 +21,7 @@ public class MediaMencoes extends javax.swing.JFrame {
     public MediaMencoes() {
         initComponents();
     }
-    public static Mencao lerMencao(Object mensagem){
-      String texto = ler(mensagem).trim().toUpperCase();
-        switch (texto) {
-            case "MB":
-                return Mencao.MB;
-            case "B":
-                return Mencao.B;
-            case "R":
-                return Mencao.R;
-            default:
-                return Mencao.I;
-        }
-    }
-    public static Mencao getMencao(int valorMencao){
-        if (valorMencao >= Mencao.MB.valorMencao) {
-            return Mencao.MB;
-        }
-        if (valorMencao < Mencao.MB.valorMencao && valorMencao >= Mencao.B.valorMencao) {
-            
-            return Mencao.B;
-        }
-        if (valorMencao < Mencao.B.valorMencao && valorMencao >= Mencao.R.valorMencao) {
-            
-            return Mencao.R;
-        }
-        else{
-            return Mencao.I;
-        }
-    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,11 +48,17 @@ public class MediaMencoes extends javax.swing.JFrame {
 
         tfMencao1Bim.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                onKeyReleased(evt);
+                onKeyReleasedMencao1(evt);
             }
         });
 
         jLabel2.setText("Mencão  2° Bimestre:");
+
+        tfMencao2Bim.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                onKeyReleasedMencao2(evt);
+            }
+        });
 
         jLabel3.setText("Mencão  3° Bimestre:");
 
@@ -154,27 +134,33 @@ public class MediaMencoes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println(tfMencao1Bim.getText());
+        Mencao mencao1Bim, mencao2Bim, mencao3Bim, mencao4Bim;
+        mencao1Bim = lerMencao(tfMencao1Bim);
+        mencao2Bim = lerMencao(tfMencao2Bim);
+        mencao3Bim = lerMencao(tfMencao3Bim);
+        mencao4Bim = lerMencao(tfMencao4Bim);
+        
+        int mediaMencao = 
+            (mencao1Bim.valorMencao + 
+            mencao2Bim.valorMencao + 
+            mencao3Bim.valorMencao + 
+            mencao4Bim.valorMencao)/4; 
+        
+        jlMediaMencao.setText(getMencao(mediaMencao).toString());
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void onKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onKeyReleased
-        String textoFinal = tfMencao1Bim.getText();
-        textoFinal = textoFinal.trim().toUpperCase();        
+    private void onKeyReleasedMencao1(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onKeyReleasedMencao1
         
-        if (textoFinal.length() > 1) {
-            textoFinal = validaCaracteres(textoFinal);
-        }
-        
-        if (textoFinal.length() > 2) {
-            textoFinal = textoFinal.substring(0, 2);
-        }
-        
-        if (textoFinal.equals("M")) {
-            textoFinal = "MB";
-        }
-        
-        tfMencao1Bim.setText(textoFinal);
-    }//GEN-LAST:event_onKeyReleased
+        tfMencao1Bim.setText(
+                validaInput(tfMencao1Bim, evt)
+        );
+    }//GEN-LAST:event_onKeyReleasedMencao1
+
+    private void onKeyReleasedMencao2(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onKeyReleasedMencao2
+        tfMencao2Bim.setText(
+                validaInput(tfMencao2Bim, evt)
+        );
+    }//GEN-LAST:event_onKeyReleasedMencao2
 
     /**
      * @param args the command line arguments
@@ -223,10 +209,27 @@ public class MediaMencoes extends javax.swing.JFrame {
     private javax.swing.JTextField tfMencao3Bim;
     private javax.swing.JTextField tfMencao4Bim;
     // End of variables declaration//GEN-END:variables
-
+    
+    public String validaInput(JTextField tfMencao, java.awt.event.KeyEvent evt){
+        String textoFinal = tfMencao.getText();
+        textoFinal = textoFinal.trim().toUpperCase();        
+                
+        if (textoFinal.length() > 0) {
+            textoFinal = validaCaracteres(textoFinal);
+        }
+        
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            textoFinal = "";
+        }
+        
+        return textoFinal;
+    }
+    
     private String validaCaracteres(String textoFinal) {
         switch (textoFinal) {
             case "M":
+            case "MB":
+            case "MBB":
                 return "MB";
             
             case "B":
@@ -237,6 +240,37 @@ public class MediaMencoes extends javax.swing.JFrame {
                
             default:
                 return "I";
+        }
+    }
+    
+    public Mencao lerMencao(JTextField tfMencao){
+      String texto = tfMencao.getText();
+        switch (texto) {
+            case "MB":
+                return Mencao.MB;
+            case "B":
+                return Mencao.B;
+            case "R":
+                return Mencao.R;
+            default:
+                return Mencao.I;
+        }
+    }
+    
+    public Mencao getMencao(int valorMencao){
+        if (valorMencao >= Mencao.MB.valorMencao) {
+            return Mencao.MB;
+        }
+        else if (valorMencao < Mencao.MB.valorMencao && valorMencao >= Mencao.B.valorMencao) {
+            
+            return Mencao.B;
+        }
+        else if (valorMencao < Mencao.B.valorMencao && valorMencao >= Mencao.R.valorMencao) {
+            
+            return Mencao.R;
+        }
+        else{
+            return Mencao.I;
         }
     }
 
