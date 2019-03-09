@@ -1,0 +1,8 @@
+﻿Fazer Exercícios da pg 6, do A - H
+utilizando o JAR feito em sala "LerExibir".
+Opcional: desenhar janelas conforme passado em sala.
+
+Entrega: compactar todos os projetos e 1 único
+arquivo e colocar na pasta pública com seu nome
+
+github.com/supertsp
