@@ -27,5 +27,34 @@ public class SolucaoArray {
                     "\n";
         }
         exibir(auxiliar);
-    }//main
+        
+        int idadeParaPesquisar = lerInt(
+                "Digite uma idade qualquer para pesquisar :)"
+        );
+        
+        boolean achei = pesquisarIdade(idadeParaPesquisar, idades);
+        exibir(
+             (achei ? "Que legal vc pensou bem!" : "Iii.. vc não sabe nada")
+        );
+        
+    }//método main
+    
+    public static boolean pesquisarIdade(int idadeParaProcurar, int[] arrayIdades){
+//        for (int contIndice = 0; contIndice < arrayIdades.length; contIndice++) {
+//            if (arrayIdades[contIndice] == idadeParaProcurar) {
+//                return true;
+//            }
+//        }
+//        
+//        return false;
+        boolean acheiIdade = false;        
+        for (int contIndice = 0; contIndice < arrayIdades.length; contIndice++) {
+            if (arrayIdades[contIndice] == idadeParaProcurar){
+                acheiIdade = true;
+                break;
+            }
+        }
+        return acheiIdade;
+    }
+    
 }//class
