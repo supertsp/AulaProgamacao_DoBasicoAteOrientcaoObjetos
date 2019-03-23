@@ -30,5 +30,26 @@ public class SolucaoArrayList {
                     "\n";
         }
         exibir(auxiliar);
+        
+        int idadeParaPesquisar = lerInt(
+                "Digite uma idade qualquer para pesquisar :)"
+        );
+        boolean achei = pesquisarIdade(idadeParaPesquisar, idades);
+        exibir(
+             (achei ? "Que legal vc pensou bem!" : "Iii.. vc não sabe nada")
+        );
     }//main
+    
+     public static boolean pesquisarIdade(
+             int idadeParaProcurar, ArrayList<Integer> idades
+     ){
+        for (int contIndice = 0; contIndice < idades.size(); contIndice++) {
+            if (idades.get(contIndice) == idadeParaProcurar) {
+                return true;
+            }
+        }
+        
+        return false;        
+    }
+    
 }//class
