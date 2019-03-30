@@ -1,23 +1,19 @@
 package nivel05;
 import static lerexibir.Janela.*;
+import nivel05.telas.Abertura;
+import nivel05.telas.CriarContato;
 public class Executavel {
     public static void main(String[] args) {
-        Contato jao = new Contato();
-        jao.nome = "Jão";
-        jao.endereco = "Rua XY";
-        jao.telefone = "(11) 1234-4567";
         
-        Contato luana = new Contato();
-        luana.nome = "Luana";
-        luana.endereco = "Rua XY";
-        luana.telefone = "(11) 1234-4567";
+        Abertura tela01 = new Abertura();
+        CriarContato tela02 = new CriarContato();
+                
+        tela01.proximaJanela = tela02;
+        tela02.proximaJanela = tela01;
+        tela02.janelaAnterior = tela01;
         
-        Contatos agenda = new Contatos();
-        agenda.adicionar(luana);
-        agenda.adicionar(jao);
-//        agenda.ordenar();
+        tela01.setVisible(true);
         
-        exibir(agenda);
     }//méto main
     
 }//class

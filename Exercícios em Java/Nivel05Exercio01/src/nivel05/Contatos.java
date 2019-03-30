@@ -36,19 +36,20 @@ public class Contatos {
         return false;
     }
     
-    /*public void ordenar(){
-        ordenarPorNome(contatos);
-    }
-    
-    private static void ordenarPorNome(List<Contato> arrayList) {
-        Collections.sort(arrayList, new Comparator<Contato>() {
-            @Override
-            public int compare(Contato c1, Contato c2) {
-                return c1.nome.compareTo(c2.nome);
+    public Contato pesquisarPorNome(String nome){
+        Contato auxiliar;
+        
+        for (int cont = 0; cont < contatos.size(); cont++) {
+            auxiliar = get(cont);
+            
+            if (auxiliar.nome.equalsIgnoreCase(nome)) {
+                return auxiliar;
             }
-        });
-    }*/
-    //[0]: tiago | Rua X | (11) 1234-5678
+        }
+        
+        return null;
+    }
+   
     @Override
     public String toString() {
         String listaContatos = "Contatos{\n";
