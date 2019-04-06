@@ -6,6 +6,7 @@
 package nivel05.telas;
 
 import javax.swing.JFrame;
+import nivel05.VarGlobal;
 
 /**
  *
@@ -13,7 +14,8 @@ import javax.swing.JFrame;
  */
 public class Abertura extends JFrame {
     
-    public JFrame proximaJanela;
+    public JFrame janelaPesquisar;
+    public JFrame janelaCriarContato;
     
     
     /**
@@ -44,6 +46,11 @@ public class Abertura extends JFrame {
 
         botaoPesquisar.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         botaoPesquisar.setText("Pesquisar");
+        botaoPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPesquisarActionPerformed(evt);
+            }
+        });
 
         botaoCriar.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         botaoCriar.setText("Criar");
@@ -86,8 +93,13 @@ public class Abertura extends JFrame {
 
     private void botaoCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarActionPerformed
         this.setVisible(false);
-        proximaJanela.setVisible(true);
+        janelaCriarContato.setVisible(true);
     }//GEN-LAST:event_botaoCriarActionPerformed
+
+    private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
+        this.setVisible(false);
+        janelaPesquisar.setVisible(true);
+    }//GEN-LAST:event_botaoPesquisarActionPerformed
 
     /**
      * @param args the command line arguments

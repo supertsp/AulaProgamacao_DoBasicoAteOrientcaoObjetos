@@ -1,7 +1,7 @@
 package nivel05;
 import java.util.*;
 
-public class Contatos {
+public class ListaContato {
     //Atributos de Classe/Instância
     private ArrayList<Contato> contatos = new ArrayList<>();
     
@@ -52,7 +52,7 @@ public class Contatos {
    
     @Override
     public String toString() {
-        String listaContatos = "Contatos{\n";
+        String listaContatos = "ListaContato{\n";
         for (int indice = 0; indice < length(); indice++) {
             listaContatos = listaContatos + 
                     "  [" + indice + "]: " 

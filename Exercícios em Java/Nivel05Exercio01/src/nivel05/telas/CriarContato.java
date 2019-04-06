@@ -6,7 +6,9 @@
 package nivel05.telas;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import nivel05.Contato;
+import nivel05.VarGlobal;
 
 /**
  *
@@ -176,12 +178,24 @@ public class CriarContato extends JFrame {
     
     
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        //1º pegou dados digitados        
         Contato novo = new Contato();
         novo.nome = inputNome.getText();
         novo.endereco = inputEndereco.getText();
         novo.telefone = inputTelefone.getText();
-        
-        System.out.println(novo);
+        //2º salvou dados
+        VarGlobal.listaContato.adicionar(novo);
+        //3º limpar os campos do formulário
+        inputNome.setText("");
+        inputEndereco.setText("");
+        inputTelefone.setText("");
+        //4º exibir mensagem de salvo como sucesso
+        JOptionPane.showMessageDialog(
+            this, 
+            "Dados salvos com sucesso", 
+            "Salvando dados...", 
+            JOptionPane.PLAIN_MESSAGE
+        );
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     
