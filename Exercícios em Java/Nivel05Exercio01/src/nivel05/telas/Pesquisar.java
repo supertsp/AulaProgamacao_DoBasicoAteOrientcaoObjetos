@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nivel05.telas;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 import nivel05.Contato;
 import nivel05.VarGlobal;
@@ -18,51 +15,74 @@ import nivel05.VarGlobal;
  */
 public class Pesquisar extends javax.swing.JFrame {
 
+    //atributo auxiliar
     public JFrame proximaJanela;
     public JFrame janelaAnterior;
-    
+
     private DefaultTableModel model;
-    
+
     /**
      * Creates new form Pesquisar
      */
     public Pesquisar() {
         initComponents();
+
+        tabelaContato.setModel(
+            new DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Nome", "Endereço", "Telefone"}
+            ) {               
+                
+                @Override
+                public boolean isCellEditable(
+                        int rowIndex, int columnIndex
+                ) {
+                    return false;
+                }
+        });
+
         model = (DefaultTableModel) tabelaContato.getModel();
         limparTabela();
+//        tabelaContato.setEnabled(false);
+
     }
-    
-    public void preencherTabela(){
+
+    public void preencherTabela() {
         limparTabela();
-        
+
         Contato temp = null;
         for (int cont = 0; cont < VarGlobal.listaContato.length(); cont++) {
             temp = VarGlobal.listaContato.get(cont);
-            adicionarLinha(temp.nome, temp.endereco, temp.telefone);
+            adicionarLinha(
+                    temp.getNome(),
+                    temp.getEndereco(),
+                    temp.getTelefone()
+            );
         }
     }
-    
-    public void adicionarLinha(String nome, String endereco, String telefone){
-        String[] linha = new String[] {nome, endereco, telefone};
+
+    public void adicionarLinha(String nome, String endereco, String telefone) {
+        String[] linha = new String[]{nome, endereco, telefone};
         model.addRow(linha);
     }
-    
+
     public void alterarLinha(
-            int indice, String nome, 
+            int indice, String nome,
             String endereco, String telefone
-    ){
+    ) {
         tabelaContato.setValueAt(nome, indice, 0);
         tabelaContato.setValueAt(endereco, indice, 1);
         tabelaContato.setValueAt(telefone, indice, 2);
     }
-    
-    public void limparTabela(){
-        for (int cont = (model.getRowCount() - 1); cont >= 0; cont--) {
+
+    public void limparTabela() {
+        for (int cont = (model.getRowCount() - 1);
+                cont >= 0;
+                cont--) {
             model.removeRow(cont);
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,7 +94,7 @@ public class Pesquisar extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        inputNome = new javax.swing.JTextField();
+        inputProcurar = new javax.swing.JTextField();
         botaoSalvar = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -96,18 +116,13 @@ public class Pesquisar extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel3.setText("Pesquise um contato:");
 
-        inputNome.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        inputNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputNomeActionPerformed(evt);
-            }
-        });
+        inputProcurar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
 
         botaoSalvar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         botaoSalvar.setText("Procurar");
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarActionPerformed(evt);
+                OnClickProcurar(evt);
             }
         });
 
@@ -154,7 +169,7 @@ public class Pesquisar extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputProcurar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(botaoSalvar))))
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -166,7 +181,7 @@ public class Pesquisar extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputProcurar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoSalvar)
                     .addComponent(jLabel3))
                 .addGap(28, 28, 28)
@@ -179,13 +194,32 @@ public class Pesquisar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inputNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputNomeActionPerformed
+    private void OnClickProcurar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OnClickProcurar
+        //1º pegar texto digitado
+        String textoPesquisa = inputProcurar.getText();
+        textoPesquisa = textoPesquisa.trim().toUpperCase();
 
-    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        //2º pesquisar nome do contato
+        Contato procurado = VarGlobal.listaContato
+                .pesquisarPorNome(textoPesquisa);
 
-    }//GEN-LAST:event_botaoSalvarActionPerformed
+        if (procurado == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Infelizmente não achamos essa pessoa :(",
+                    "Erro",
+                    JOptionPane.PLAIN_MESSAGE
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Os dados da pessoa procurada são:\n"
+                    + procurado,
+                    "Resultado",
+                    JOptionPane.PLAIN_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_OnClickProcurar
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         this.setVisible(false);
@@ -234,7 +268,7 @@ public class Pesquisar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JButton botaoVoltar;
-    private javax.swing.JTextField inputNome;
+    private javax.swing.JTextField inputProcurar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

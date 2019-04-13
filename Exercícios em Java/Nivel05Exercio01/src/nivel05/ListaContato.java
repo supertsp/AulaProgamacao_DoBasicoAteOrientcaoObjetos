@@ -42,7 +42,7 @@ public class ListaContato {
         for (int cont = 0; cont < contatos.size(); cont++) {
             auxiliar = get(cont);
             
-            if (auxiliar.nome.equalsIgnoreCase(nome)) {
+            if (auxiliar.getNome().equalsIgnoreCase(nome)) {
                 return auxiliar;
             }
         }
@@ -56,9 +56,9 @@ public class ListaContato {
         for (int indice = 0; indice < length(); indice++) {
             listaContatos = listaContatos + 
                     "  [" + indice + "]: " 
-                        + get(indice).nome + " | "
-                        + get(indice).endereco + " | "
-                        + get(indice).telefone + "\n"
+                        + get(indice).getNome() + " | "
+                        + get(indice).getEndereco() + " | "
+                        + get(indice).getTelefone() + "\n"
             ;
         }
         listaContatos = listaContatos + "}";

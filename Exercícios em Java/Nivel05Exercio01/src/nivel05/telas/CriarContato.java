@@ -179,10 +179,12 @@ public class CriarContato extends JFrame {
     
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         //1º pegou dados digitados        
-        Contato novo = new Contato();
-        novo.nome = inputNome.getText();
-        novo.endereco = inputEndereco.getText();
-        novo.telefone = inputTelefone.getText();
+        Contato novo = new Contato(
+                inputNome.getText(),
+                inputEndereco.getText(),
+                inputTelefone.getText()
+        );
+        
         //2º salvou dados
         VarGlobal.listaContato.adicionar(novo);
         //3º limpar os campos do formulário
