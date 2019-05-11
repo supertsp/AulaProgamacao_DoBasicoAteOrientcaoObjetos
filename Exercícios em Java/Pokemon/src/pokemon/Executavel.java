@@ -10,7 +10,8 @@ public class Executavel {
         Ataque raio04 = new Ataque("Raio Psiquico", 35, 20);
         Ataque raio05 = new Ataque(" Raio Psiquico ", 35, 20);
         
-        Pokemon pikachu = new Pokemon("Pikachu", raio01, raio02, raio03, raio04);
+        Pokemon pikachu = new Pokemon("Pikachu", 
+                raio01, raio02, raio03, raio04, raio05);
         System.out.println(pikachu);
         
         pikachu.addAtaqueSelecionado(raio01);

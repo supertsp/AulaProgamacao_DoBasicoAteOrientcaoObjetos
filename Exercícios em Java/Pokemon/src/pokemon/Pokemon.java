@@ -45,7 +45,11 @@ public class Pokemon {
     public int getVida() {
         return vida;
     }
-
+    
+    public double getDefesa(){
+        return defesa;
+    }
+    
     private void incrementarVida(int valorIncremento) {
         vida += valorIncremento;
 
@@ -59,7 +63,12 @@ public class Pokemon {
     }
 
     public void addAtaquesDisponiveis(Ataque... ataques) {
-        Collections.addAll(ataquesDisponiveis, ataques);
+//        Collections.addAll(ataquesDisponiveis, ataques);
+        for (Ataque ataque : ataques) {
+            if (!ataquesDisponiveis.contains(ataque)) {
+                ataquesDisponiveis.add(ataque);
+            }
+        }
     }
 
     public void addAtaqueSelecionado(Ataque novoAtaque) {
@@ -84,7 +93,75 @@ public class Pokemon {
 
         return achou;
     }
-
+    
+    public Ataque getAtaqueDisponivel(int indice){
+        if (indice >= 0 && indice < ataquesDisponiveis.size()) {
+            return ataquesDisponiveis.get(indice);
+        }
+        
+        return null;
+    }
+    
+    public Ataque getAtaqueSelecionado(int indice){
+        if (indice >= 0 && indice < ataquesSelecionados.length) {
+            return ataquesSelecionados[indice];
+        }
+        
+        return null;
+    }
+    
+    public void removeAtaqueDisponivel(int indice){
+        if (indice >= 0 && indice < ataquesDisponiveis.size()) {
+            ataquesDisponiveis.remove(indice);
+        }
+    }
+    
+    public void removeAtaqueSelecionado(int indice){
+        if (indice >= 0 && indice < ataquesSelecionados.length) {
+            ataquesSelecionados[indice] = null;
+        }
+    }
+    
+    public int getLengthOfAtaquesDisponiveis(){
+        return ataquesDisponiveis.size();
+    }
+    
+    public int getLengthOfAtaquesSelecionados(){
+        return MAX_QTD_ATAQUES_SELECIONADOS;
+    }
+    
+    public boolean atacar(Pokemon inimigo, int indiceAtaqueSelecionado){
+        Ataque ataquePlayer = getAtaqueSelecionado(indiceAtaqueSelecionado);
+               
+        if (ataquePlayer != null) {
+            //1) verificar a precisão se acertou
+            double resultadoPrecisao = 
+                    ataquePlayer.getPrecisao() + 
+                    (Math.random() * 100.1);
+            
+            //2) se acertou reduz a vida pelo saldo da força ataque
+            if (resultadoPrecisao >= 100) {
+                double saldoForcaAtaque = 
+                        ataquePlayer.getForca() - inimigo.getDefesa();
+                
+                if (saldoForcaAtaque > 0) {
+                    inimigo.incrementarVida(-(int)saldoForcaAtaque);
+                    return true;
+                }                
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean morreu(){
+        if (vida == MIN_VALOR_VIDA) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     @Override
     public String toString() {
         return "Pokemon{"
